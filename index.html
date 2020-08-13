@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap | JohnAnawat</title>
+    <meta property="og:title" content="$OG_TITLE" />
+    <meta property="og:description" content="$OG_DESCRIPTION" />
+    <meta property="og:image" content="$OG_IMAGE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
+        type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+</head>
+
+<body>
+    <div class="container" data-example-id="striped-table" style="margin-top: 10vh;">
+        <!-- Datepicker as text field -->
+        <div class="panel panel-primary" style="margin: 0 auto;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add field unlimited and datepicker use bootstrap</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    <select class="form-control" name="selectCategory" id="selectCategory">
+                        <option disabled="" selected="">Select Category</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="React JS">React JS</option>
+                        <option value="React Native">React Native</option>
+                        <option value="Node JS">Node JS</option>
+                        <option value="PHP">PHP</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy">
+                        <input class="form-control" type="text" readonly />
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="Input" class="form-control" placeholder="Input" id="input_name">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary add_field_button"><i class="fa fa-plus"></i> Add
+                        More</button>
+                </div>
+                <div class="input_fields_wrap">
+                    <!-- Dynamic Fields go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+
+        $("#datepicker").datepicker({
+            autoclose: true,
+            todayHighlight: true
+        }).datepicker('update', new Date());
+
+
+        var wrapper = $(".input_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_field_button"); //Add button ID
+
+        $(add_button).click(function (e) { //on add input button click
+            e.preventDefault();
+
+            var value_select = $('#selectCategory').val();
+            var value_date = $('#datepicker input').val();
+            var value_input = $('#input_name').val();
+
+            if (value_select && value_date && value_input && value_select.length > 0 && value_date.length > 0 && value_input.length > 0) {
+
+                var html = '';
+
+                html += `
+    <div class="input-line-control removeMe">
+    <div class="col-md-3 select-sub" style="margin-top: 25px;">
+    <p>${value_select} </p>
+    </div>
+    <div class="col-md-3 date-sub" style="margin-top: 25px;">
+    <p> ${value_date} </p>
+    </div>
+    <div class="col-md-3 remark-sub" style="margin-top: 25px;">
+    <p> ${value_input} </p>
+    </div>
+    <div class="col-md-3" style="margin-top: 25px;">
+    <button class="btn btn-danger remove-date"><i class="fa fa-remove"></i>Remove</button>
+    </div>
+    </div>
+    `
+                $(wrapper).append(html); //add input box
+            } else {
+                alert('please enter !');
+            }
+        });
+
+        $(wrapper).on("click", ".remove-date", function (e) { //user click on remove text
+            e.preventDefault(); $(this).closest('div.removeMe').remove();
+        })
+
+    });
+</script>
